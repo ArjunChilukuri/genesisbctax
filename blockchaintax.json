@@ -1,0 +1,582 @@
+{
+  "ApplicationName": "blockchaintax",
+  "DisplayName": "BlockchainTaxation",
+  "Description": "Blockchain based app to acheive Automatic Taxation",
+  "ApplicationRoles": [
+    {
+      "Name": "customer",
+      "Description": "Cusotmer"
+    },
+    {
+      "Name": "organization",
+      "Description": "Business Entities"
+    },
+    {
+      "Name":"auditor",
+      "Description": "Income Tax Department"
+    }
+  ],
+  "Workflows": [
+    {
+      "Name": "Organization",
+      "DisplayName": "Organization",
+      "Description": "Workflow",
+      "Initiators": [ "organization" ],
+      "StartState": "CREATEORG",
+      "Properties": [
+        {
+          "Name": "State",
+          "DisplayName": "State",
+          "Description": "Holds the state of the contract.",
+          "Type": {
+            "Name": "state"
+          }
+        },
+        {
+          "Name": "orgidentifier",
+          "DisplayName": "orgidentifier",
+          "Description": "",
+          "Type": {
+            "Name": "organization"
+          }
+        },
+        {
+          "Name": "orgname",
+          "DisplayName": "orgname",
+          "Description": "",
+          "Type": {
+            "Name": "string"
+          }
+        },
+        {
+          "Name": "amount",
+          "DisplayName": "amount",
+          "Description": "",
+          "Type": {
+            "Name": "int"
+          }
+        }, {
+          "Name": "TAN_ID",
+          "DisplayName": "TAN_ID",
+          "Description": "",
+          "Type": {
+            "Name": "int"
+          }
+        },
+        {
+          "Name": "transactions",
+          "Description": "transactions",
+          "DisplayName": "transactions",
+          "Type": {
+            "Name": "array",
+            "ElementType": {
+                "Name": "int"
+            }
+          }
+        }
+      ],
+      "Constructor": {
+        "Parameters": [
+        
+        {
+          "Name": "org_name",
+          "Description": "...",
+          "DisplayName": "org_name",
+          "Type": {
+            "Name": "string"
+          }
+      },
+      {
+        "Name": "TAN",
+        "Description": "...",
+        "DisplayName": "TAN",
+        "Type": {
+          "Name": "int"
+        }
+    }
+        ]
+          },
+      "Functions": [
+        {
+          "Name": "updateamount",
+          "DisplayName": "updateamount",
+          "Description": "...",
+          "Parameters": [ {
+            "Name": "newvalue",
+            "Description": "newvalue",
+            "DisplayName": "newvalue",
+            "Type": {
+              "Name": "int"
+            }
+          }]
+        },
+        {
+          "Name": "addtransaction",
+          "DisplayName": "addtransaction",
+          "Description": "...",
+          "Parameters": [
+            {
+              "Name": "txnid",
+              "Description": "txnid",
+              "DisplayName": "txnid",
+              "Type": {
+                "Name": "address"
+              }
+            }
+          ]
+        }
+      ],
+      "States": [
+        {
+          "Name": "CREATEORG",
+          "DisplayName": "CREATEORG",
+          "Description": "...",
+          "PercentComplete": 30,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": []
+        },
+        {
+          "Name": "TRASACT",
+          "DisplayName": "TRASACT",
+          "Description": "...",
+          "PercentComplete": 50,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": [
+            {
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "addtransaction",
+              "NextStates": [ "TRASACT" ],
+              "DisplayName": "Add transaction"
+            },{
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "updateamount",
+              "NextStates": [ "TRASACT" ],
+              "DisplayName": "UpdateAmount"
+            }
+
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "Customer",
+      "DisplayName": "Customer",
+      "Description": "Workflow",
+      "Initiators": [ "customer" ],
+      "StartState": "CREATE",
+      "Properties": [
+        {
+          "Name": "State",
+          "DisplayName": "State",
+          "Description": "Holds the state of the contract.",
+          "Type": {
+            "Name": "state"
+          }
+        },
+        {
+          "Name": "customerid",
+          "DisplayName": "customerid",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        },
+        {
+          "Name": "Customer_Info",
+          "DisplayName": "Customer_Info",
+          "Description": "",
+          "Type": {
+            "Name": "string"
+          }
+        },
+        {
+          "Name": "amount",
+          "DisplayName": "amount",
+          "Description": "",
+          "Type": {
+            "Name": "int"
+          }
+        }, {
+          "Name": "pan_id",
+          "DisplayName": "pan_id",
+          "Description": "",
+          "Type": {
+            "Name": "int"
+          }
+        },
+        {
+          "Name": "transactions",
+          "Description": "transactions",
+          "DisplayName": "transactions",
+          "Type": {
+            "Name": "array",
+            "ElementType": {
+                "Name": "int"
+            }
+          }
+        }
+      ],
+      "Constructor": {
+        "Parameters": [
+      {
+        "Name": "pan",
+        "Description": "...",
+        "DisplayName": "pan",
+        "Type": {
+          "Name": "int"
+        }
+    },
+    {
+      "Name": "CustomerInfo",
+      "Description": "...",
+      "DisplayName": "CustomerInfo",
+      "Type": {
+        "Name": "string"
+      }
+  }
+        ]
+          },
+      "Functions": [
+        {
+          "Name": "updateamount",
+          "DisplayName": "updateamount",
+          "Description": "...",
+          "Parameters": [ {
+            "Name": "newvalue",
+            "Description": "newvalue",
+            "DisplayName": "newvalue",
+            "Type": {
+              "Name": "int"
+            }
+          }]
+        },
+        {
+          "Name": "addtransaction",
+          "DisplayName": "addtransaction",
+          "Description": "...",
+          "Parameters": [
+            {
+              "Name": "txnid",
+              "Description": "txnid",
+              "DisplayName": "txnid",
+              "Type": {
+                "Name": "address"
+              }
+            }
+          ]
+        }
+      ],
+      "States": [
+        {
+          "Name": "CREATE",
+          "DisplayName": "CREATE",
+          "Description": "...",
+          "PercentComplete": 30,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": []
+        },
+        {
+          "Name": "TRANSACT",
+          "DisplayName": "TRANSACT",
+          "Description": "...",
+          "PercentComplete": 50,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": [
+            {
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "addtransaction",
+              "NextStates": [ "TRANSACT" ],
+              "DisplayName": "Add transaction"
+            },{
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "updateamount",
+              "NextStates": [ "TRANSACT" ],
+              "DisplayName": "UpdateAmount"
+            }
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "Name": "Transaction",
+      "DisplayName": "transaction",
+      "Description": "Workflow",
+      "Initiators": [ "organization" ],
+      "StartState": "CREATE",
+      "Properties": [
+        {
+          "Name": "State",
+          "DisplayName": "State",
+          "Description": "Holds the state of the contract.",
+          "Type": {
+            "Name": "state"
+          }
+        },
+        {
+          "Name": "from",
+          "DisplayName": "from",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        },
+        {
+          "Name": "to",
+          "DisplayName": "to",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        },
+        {
+          "Name": "amount",
+          "DisplayName": "amount",
+          "Description": "",
+          "Type": {
+            "Name": "int"
+          }
+        },
+        {
+          "Name": "transaction_description",
+          "DisplayName": "transaction_description",
+          "Description": "",
+          "Type": {
+            "Name": "string"
+          }
+        }
+      ],
+      "Constructor": {
+        "Parameters": [
+        {
+            "Name": "from_entity",
+            "Description": "...",
+            "DisplayName": "from_entity",
+            "Type": {
+              "Name": "address"
+            }
+        },
+
+        {
+          "Name": "transaction_des",
+          "Description": "...",
+          "DisplayName": "transaction_des",
+          "Type": {
+            "Name": "string"
+          }
+      },
+      {
+        "Name": "value",
+        "DisplayName": "value",
+        "Description": "",
+        "Type": {
+          "Name": "int"
+        }
+      }
+        ]
+          },
+      "Functions": [
+        {
+          "Name": "accepted_toentity",
+          "DisplayName": "accepted_toentity",
+          "Description": "...",
+          "Parameters": [{
+            "Name": "to_entity",
+            "Description": "to_entity",
+            "DisplayName": "to_entity",
+            "Type": {
+              "Name": "address"
+            }
+          }]
+        }
+        ],
+      "States": [
+        {
+          "Name": "CREATE",
+          "DisplayName": "CREATE",
+          "Description": "...",
+          "PercentComplete": 30,
+          "Value": 0,
+          "Style": "Success",
+           "Transitions": []
+        },
+        {
+          "Name": "TRANSACT",
+          "DisplayName": "TRANSACT",
+          "Description": "...",
+          "PercentComplete": 50,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": [
+            {
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "accepted_toentity",
+              "NextStates": [ "TRANSACT" ],
+              "DisplayName": "accepted_toentity"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "Name": "blockchaintax",
+      "DisplayName": "blockchaintax",
+      "Description": "Workflow",
+      "Initiators": [ "organization" ],
+      "StartState": "ORGANIZATIONCREATED",
+      "Properties": [
+        {
+          "Name": "State",
+          "DisplayName": "State",
+          "Description": "Holds the state of the contract.",
+          "Type": {
+            "Name": "state"
+          }
+        },
+        {
+          "Name": "organization",
+          "DisplayName": "organization",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        },{
+          "Name": "customer",
+          "DisplayName": "customer",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        },
+        {
+          "Name": "transaction",
+          "DisplayName": "transaction",
+          "Description": "",
+          "Type": {
+            "Name": "address"
+          }
+        }
+      ],
+      "Constructor": {
+        "Parameters": [
+        {
+            "Name": "org_name",
+            "Description": "...",
+            "DisplayName": "org_name",
+            "Type": {
+              "Name": "string"
+            }
+        },
+
+        {
+          "Name": "tan",
+          "Description": "...",
+          "DisplayName": "tan",
+          "Type": {
+            "Name": "int"
+          }
+        }
+        ]
+          },
+      "Functions": [
+        {
+          "Name": "intiatetransact",
+          "DisplayName": "intiatetransact",
+          "Description": "...",
+          "Parameters": [ {
+            "Name": "transaction_des",
+            "Description": "transaction_des",
+            "DisplayName": "transaction_des",
+            "Type": {
+              "Name": "string"
+            }
+          },
+          {
+            "Name": "value",
+            "Description": "value",
+            "DisplayName": "value",
+            "Type": {
+              "Name": "int"
+            }
+          }]
+        },
+        {
+          "Name": "accepttransaction",
+          "DisplayName": "accepttransaction",
+          "Description": "...",
+          "Parameters": [
+            {
+              "Name": "pan",
+              "Description": "pan",
+              "DisplayName": "pan",
+              "Type": {
+                "Name": "int"
+              }
+            },{
+              "Name": "Customer_Info",
+              "Description": "Customer_Info",
+              "DisplayName": "Customer_Info",
+              "Type": {
+                "Name": "string"
+              }
+            }
+
+          ]
+        }
+      ],
+      "States": [
+        {
+          "Name": "ORGANIZATIONCREATED",
+          "DisplayName": "ORGANIZATIONCREATED",
+          "Description": "...",
+          "PercentComplete": 30,
+          "Value": 0,
+          "Style": "Success",
+           "Transitions": []
+        },
+        {
+          "Name": "TRANSACT",
+          "DisplayName": "TRANSACT",
+          "Description": "...",
+          "PercentComplete": 50,
+          "Value": 0,
+          "Style": "Success",
+          "Transitions": [
+            {
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "intiatetransact",
+              "NextStates": [ "TRANSACT" ],
+              "DisplayName": "intiatetransact"
+            },{
+              "AllowedRoles": ["customer","organization"],
+              "AllowedInstanceRoles": [],
+              "Description": "...",
+              "Function": "accepttransaction",
+              "NextStates": [ "TRANSACT" ],
+              "DisplayName": "accepttransaction"
+            }
+            
+          ]
+        }
+      ]
+    }
+  ]
+}
